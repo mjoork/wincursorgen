@@ -1,6 +1,6 @@
 [package]
 name = "wincursorgen"
-version = "0.0.1"
+version = "0.2.0"
 authors = ["Mark Pokhil <vfhr.afr@gmail.com>"]
 edition = "2018"
 
