@@ -6,13 +6,13 @@ use std::{
 };
 
 pub struct CursorConfig {
-    pub cursor_size: u8,
-    pub cursor_offset_x: u8,
-    pub cursor_offset_y: u8,
+    pub cursor_size: u16,
+    pub cursor_offset_x: u16,
+    pub cursor_offset_y: u16,
     pub cursor_image: String,
 }
 
-pub fn parse_config_file(file: &PathBuf) -> Vec<CursorConfig> {	
+pub fn parse_config_file(file: &PathBuf) -> Vec<CursorConfig> {
     // Try opening config file.
     let config_file = match std::fs::File::open(file) {
         Ok(f) => f,
@@ -51,11 +51,11 @@ pub fn parse_config_file(file: &PathBuf) -> Vec<CursorConfig> {
 
     // Parse each line.
     for line in lines {
-        /* 
+        /*
          * Expect that we can get a line since we
          * already confirmed that buffer isn't
          * empty.
-         */ 
+         */
         configs.push(match parse_config_line(line.expect("Expected a line")) {
             Ok(config) => config,
             Err(e) => {
@@ -86,8 +86,8 @@ fn parse_config_line(line: String) -> Result<CursorConfig, ParseConfigLineError>
 }
 
 /// Utility function to parse a value from the chunk of config's line gracefully.
-fn get_number_from_chunk(chunk: &str) -> u8 {
-    match chunk.parse::<u8>() {
+fn get_number_from_chunk(chunk: &str) -> u16 {
+    match chunk.parse::<u16>() {
         Ok(v) => v,
         Err(e) => {
             eprintln!("Invalid line argument: {}", e);

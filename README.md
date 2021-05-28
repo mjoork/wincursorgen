@@ -14,7 +14,8 @@ Therefore I imagine it fitting nicely into already existing automation scripts a
 
 ## TODO
 - [x] Parsing cursor config files
-- [ ] Converting images to cursor files according to config
+- [x] Converting images to cursor files according to config
+- [ ] Support animation
 
 ## Disclaimer
 
