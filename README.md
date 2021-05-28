@@ -1,16 +1,18 @@
 # wincursorgen
 
-A program to convert series of PNGs into windows cursor files (`.cur`). For more explanation see [what](#what) and [why](#why).
+A program to convert series of PNGs into CUR cursor files (`.cur`). For more explanation see [what](#what) and [why](#why).
 
 ## What?
 
-This is my attempt to recreate Linux utility `xcursorgen`, which generates x-cursor files, on Windows to generate windows cursor files.
+In Linux world there's a utility called `xcursorgen`. It used to *"create an X cursor file from a collection of PNG images"* or just to create cursors from pngs basically.
+
+This program - `wincursorgen` - is meant to act as twin of `xcursorgen` for Windows CUR files, to *"create a CUR cursor file from a collection of PNG images"*, that is.
 
 ## Why?
 
 I've found this one cursor for Linux that I desperately want to port to Windows, but I also don't want to impact the workflow of the author or writing a python script. Since this is just a pure desire of mine, It doesn't bother me if I spend a week or a month writing this software. I just hope that it will be useful.
 
-Therefore I imagine it fitting nicely into already existing automation scripts and makefiles that cursor makers use. Instead of completely rewriting their scripts, they can just duplicate a make target and replace `xcursorgen` with `wincursorgen` and get the same output, but for windows.
+Therefore I imagine it fitting nicely into already existing automation scripts and makefiles that cursor makers use. Instead of completely rewriting their scripts, they can just duplicate a make target and replace `xcursorgen` with `wincursorgen` and get the same output, but for Windows.
 
 ## TODO
 - [x] Parsing cursor config files
