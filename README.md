@@ -4,7 +4,7 @@ A program to convert series of PNGs into CUR cursor files (`.cur`). For more exp
 
 ## What?
 
-In Linux world there's a utility called `xcursorgen`. It used to *"create an X cursor file from a collection of PNG images"* or just to create cursors from pngs basically.
+In Linux world there's a utility called `xcursorgen`. It is used to *"create an X cursor file from a collection of PNG images"* or just to create cursors from pngs basically.
 
 This program - `wincursorgen` - is meant to act as twin of `xcursorgen` for Windows CUR files, to *"create a CUR cursor file from a collection of PNG images"*, that is.
 
