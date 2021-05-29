@@ -15,13 +15,13 @@ List of testing scripts:
 <table>
 	<thead>
 		<tr>
-			<th width="200px">Script</th>
+			<th width="300px">Script</th>
 			<th>Purpose</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td width="200px"><code>create_static_cursor.(sh|ps1)</code></td>
+			<td width="300px"><code>create_static_cursor.(sh|ps1)</code></td>
 			<td>Creates a static windows cursor using a PNG image according config file.</td>
 		</tr>
 	</tbody>
