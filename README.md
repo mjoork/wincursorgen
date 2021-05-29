@@ -1,6 +1,41 @@
 # wincursorgen
 
-A program to convert series of PNGs into CUR cursor files (`.cur`). For more explanation see [what](#what) and [why](#why).
+A program to convert series of PNGs into CUR cursor files (`.cur`). For more explanation see [what](#what), [why](#why) and [does it work](#does-it-work).
+
+## Testing
+
+There are testing scripts available with resources needed for testing in `./tests/` directory. All tests should be run from the root. Like this:
+
+```shell
+./tests/script_X.(sh|ps1)
+```
+
+List of testing scripts:
+
+<table>
+	<thead>
+		<tr>
+			<th width="200px">Script</th>
+			<th>Purpose</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td width="200px"><code>create_static_cursor.(sh|ps1)</code></td>
+			<td>Creates a static windows cursor using a PNG image according config file.</td>
+		</tr>
+	</tbody>
+</table>
+
+## TODO
+- [x] Parsing cursor config files
+- [x] Converting images to cursor files according to config
+- [ ] Support animation
+
+## Disclaimer
+
+I don't concern myself with the fact that Windows' cursor themes don't allow the same amount of customization as in Linux. This is only a tool, its' purpose is clear, use it as you please.
+
 
 ## What?
 
@@ -17,12 +52,3 @@ Therefore I imagine it fitting nicely into already existing automation scripts a
 ## Does it work?
 
 Every stable release is tested to work, but if you find a bug, open an issue.
-
-## TODO
-- [x] Parsing cursor config files
-- [x] Converting images to cursor files according to config
-- [ ] Support animation
-
-## Disclaimer
-
-I don't concern myself with the fact that Windows' cursor themes don't allow the same amount of customization as in Linux. This is only a tool, its' purpose is clear, use it as you please.
