@@ -6,13 +6,13 @@ use argh::FromArgs;
 /// Generate a windows cursor file from a series of PNG images
 pub struct Arguments {
     /// image files directory
-    #[argh(option, short = 'r')]
-    pub resources: PathBuf,
+    #[argh(option, short = 'p')]
+    pub prefix: PathBuf,
     /// config file
-    #[argh(option, short = 'c')]
+    #[argh(positional)]
     pub config: PathBuf,
     /// output file
-    #[argh(option, short = 'o')]
+    #[argh(positional)]
     pub output: PathBuf,
 }
 
@@ -22,12 +22,12 @@ impl Arguments {
         let mut args: Arguments = argh::from_env();
 
         // Clean paths.
-        args.resources = args.resources.clean();
+        args.prefix = args.prefix.clean();
         args.config = args.config.clean();
         args.output = args.output.clean();
 
         // Check that resources is a directory.
-        if !args.resources.is_dir() {
+        if !args.prefix.is_dir() {
             eprintln!("Provided resources path is not a directory. Must be.");
             exit(1);
         }
