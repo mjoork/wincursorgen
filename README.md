@@ -14,6 +14,10 @@ I've found this one cursor for Linux that I desperately want to port to Windows,
 
 Therefore I imagine it fitting nicely into already existing automation scripts and makefiles that cursor makers use. Instead of completely rewriting their scripts, they can just duplicate a make target and replace `xcursorgen` with `wincursorgen` and get the same output, but for Windows.
 
+## Does it work?
+
+Every stable release is tested to work, but if you find a bug, open an issue.
+
 ## TODO
 - [x] Parsing cursor config files
 - [x] Converting images to cursor files according to config
