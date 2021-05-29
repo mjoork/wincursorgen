@@ -1,4 +1,2 @@
 /target
-/config
-/output
-/resources
+/tests/cursors
