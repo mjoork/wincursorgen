@@ -1,54 +1,92 @@
-use std::{
-    io::{BufReader, BufWriter},
-    process::exit,
-};
+use std::{error::Error, fs::File, io::BufWriter, path::PathBuf, process::exit};
+use wincursorgen::{config::parse_config, cursor::generate_cur};
+use wincursorgen::cursor::generate_ani;
 
-use wincursorgen::{args::Arguments, processing::parse_config_file};
+fn main() -> Result<(), Box<dyn Error>> {
+    let args = wincursorgen::cli::Arguments::parse()?;
 
-fn main() {
-    let args = Arguments::parse();
-    let cur_infos = parse_config_file(&args.config);
-
-    let mut cursor = ico::IconDir::new(ico::ResourceType::Cursor);
-
-    for cur_info in &cur_infos {
-        let image_path = args.prefix.join(&cur_info.image);
-
-        let reader = if let Ok(file) = std::fs::File::open(&image_path) {
-            BufReader::new(file)
-        } else {
-            eprintln!("Could not create a buffer for reading from file {:?}", image_path);
+    let parsed_cursors = match parse_config(args.config) {
+        Ok(v) => v,
+        Err(e) => {
+            eprintln!("{}", e);
             exit(1);
-        };
+        }
+    };
 
-        let mut icon_image = ico::IconImage::read_png(reader).expect("Expected IconImage");
-        icon_image.set_cursor_hotspot(Some((cur_info.hotspot_x, cur_info.hotspot_y)));
-        let icon_entry = ico::IconDirEntry::encode(&icon_image).expect("Expected IconDirEntry");
-        cursor.add_entry(icon_entry);
+    for ci in parsed_cursors {
+        let (size, ci) = ci;
+
+        match ci {
+            wincursorgen::config::ConfigResult::Cursors(frames) => {
+                let cursor = generate_ani(size, frames, args.prefix.clone());
+
+                let writer = match File::create(args.output.with_extension("ani")) {
+                    Ok(file) => BufWriter::new(file),
+                    Err(error) => {
+                        match error.kind() {
+                            std::io::ErrorKind::PermissionDenied => {
+                                eprintln!("Lacking permission to open a writer to output.")
+                            }
+                            _ => eprintln!(
+                                "Something wild happened while trying to open a writer to output, please report: {}", error
+                            ),
+                        };
+                        exit(1);
+                    }
+                };
+
+                if let Err(error) = cursor.encode(writer) {
+                    match error {
+                        riff_ani::Error::Io(error) => {
+                            match error.kind() {
+                               
+                            std::io::ErrorKind::PermissionDenied => {
+                                eprintln!("Lacking permission to open a writer to output.")
+                            }
+                            _ => eprintln!(
+                                "Something wild happened while trying to open a writer to output, please report: {}", error
+                            ),
+                            }
+                        }
+                    }
+                    exit(1);
+                }
+            }
+            wincursorgen::config::ConfigResult::Cursor(cursor) => {
+                let cursor = generate_cur(
+                    cursor.hotspot,
+                    PathBuf::from(args.prefix.join(cursor.image)),
+                );
+
+                let writer = match File::create(args.output.with_extension("cur")) {
+                    Ok(file) => BufWriter::new(file),
+                    Err(error) => {
+                        match error.kind() {
+                            std::io::ErrorKind::PermissionDenied => {
+                                eprintln!("Lacking permission to open a writer to output.")
+                            }
+                            _ => eprintln!(
+                                "Something wild happened while trying to open a writer to output, please report: {}", error
+                            ),
+                        };
+                        exit(1);
+                    }
+                };
+
+                if let Err(error) = cursor.write(writer) {
+                    match error.kind() {
+                            std::io::ErrorKind::PermissionDenied => {
+                                eprintln!("Lacking permission to open a writer to output.")
+                            }
+                            _ => eprintln!(
+                                "Something wild happened while trying to open a writer to output, please report: {}", error
+                            ),
+                        };
+                    exit(1);
+                }
+            }
+        };
     }
 
-    let writer = if let Ok(file) = std::fs::File::create(&args.output) {
-        BufWriter::new(file)
-    } else {
-        eprintln!(
-            "Could not create a buffer for writing file {:?}",
-            &args.output
-        );
-        exit(1);
-    };
-
-    match cursor.write(writer) {
-        Ok(_) => {}
-        Err(e) => match e.kind() {
-            std::io::ErrorKind::PermissionDenied => {
-                eprintln!("Lacking permissions to write {:?}", &args.output);
-                exit(1);
-            }
-
-            _ => {
-                eprintln!("Some error occured while writing {:?}", &args.output);
-                exit(1);
-            }
-        },
-    };
+    Ok(())
 }
