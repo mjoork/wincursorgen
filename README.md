@@ -2,7 +2,7 @@
 
 [![Build and test](https://github.com/poormark/wincursorgen/actions/workflows/rust.yml/badge.svg?event=push)](https://github.com/poormark/wincursorgen/actions/workflows/rust.yml)
 
-A program to convert series of PNGs into CUR cursor files (`.cur`). For more explanation see [what](#what), [why](#why) and [does it work](#does-it-work).
+A program to convert series of PNGs into CUR cursor files (`.cur`). For more explanation see [what](#what), [why](#why) and [does it work](#does-it-work). Make sure to check [wcursorgen](https://github.com/balthild/wcursorgen) as well, it's a program totally the same as mine, except for one detail, it isn't immediately compatible with existing makefiles and scripts, because its' CLI interface is different from xcursorgen.
 
 ## Testing
 
@@ -58,3 +58,7 @@ Therefore I imagine it fitting nicely into already existing automation scripts a
 ## Does it work?
 
 Every stable release is tested to work, but if you find a bug, open an issue.
+
+## Credits
+
+Actually, thx to `xcursorgen` for creating this awesome "cursor specification" kinda files. Makes creating cursors a fun automation task.
